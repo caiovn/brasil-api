@@ -1,0 +1,17 @@
+meta {
+  name: 07 - ISBN vazio
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{baseUrl}}/isbn/v1/?providers=cbl
+  body: none
+  auth: none
+}
+
+tests {
+  test("retorna erro para ISBN vazio", function() {
+    expect(res.getStatus()).to.be.gte(400);
+  });
+}

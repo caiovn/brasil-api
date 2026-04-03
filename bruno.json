@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "unicamp-api-scenarios",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

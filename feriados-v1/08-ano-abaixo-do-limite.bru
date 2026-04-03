@@ -1,0 +1,17 @@
+meta {
+  name: 08 - Ano abaixo do limite
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{baseUrl}}/feriados/v1/1899
+  body: none
+  auth: none
+}
+
+tests {
+  test("retorna erro para ano abaixo do limite", function() {
+    expect(res.getStatus()).to.be.gte(400);
+  });
+}

@@ -1,0 +1,17 @@
+meta {
+  name: 06 - CEP com caractere invalido
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/cep/v2/12A45-678
+  body: none
+  auth: none
+}
+
+tests {
+  test("retorna erro para CEP com caractere nao numerico", function() {
+    expect(res.getStatus()).to.be.gte(400);
+  });
+}

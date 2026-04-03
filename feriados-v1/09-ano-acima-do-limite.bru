@@ -1,0 +1,17 @@
+meta {
+  name: 09 - Ano acima do limite
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{baseUrl}}/feriados/v1/2200
+  body: none
+  auth: none
+}
+
+tests {
+  test("retorna erro para ano acima do limite", function() {
+    expect(res.getStatus()).to.be.gte(400);
+  });
+}

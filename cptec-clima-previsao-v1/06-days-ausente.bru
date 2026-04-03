@@ -1,0 +1,17 @@
+meta {
+  name: 06 - Days ausente
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/cptec/v1/clima/previsao/{{validCityCode}}/
+  body: none
+  auth: none
+}
+
+tests {
+  test("retorna erro para days ausente", function() {
+    expect(res.getStatus()).to.be.gte(400);
+  });
+}

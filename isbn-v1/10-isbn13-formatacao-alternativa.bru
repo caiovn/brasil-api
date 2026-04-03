@@ -1,0 +1,17 @@
+meta {
+  name: 10 - ISBN13 com formatacao alternativa
+  type: http
+  seq: 10
+}
+
+get {
+  url: {{baseUrl}}/isbn/v1/978-854570-2870
+  body: none
+  auth: none
+}
+
+tests {
+  test("aceita ISBN13 com hifens em posicoes alternativas", function() {
+    expect([200, 404]).to.include(res.getStatus());
+  });
+}

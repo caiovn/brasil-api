@@ -1,0 +1,18 @@
+meta {
+  name: 02 - Days no limite superior
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/cptec/v1/clima/previsao/{{validCityCode}}/6
+  body: none
+  auth: none
+}
+
+tests {
+  test("retorna sucesso para days igual a 6", function() {
+    expect(res.getStatus()).to.equal(200);
+    expect(res.getBody()).to.be.an("array");
+  });
+}

@@ -1,0 +1,17 @@
+meta {
+  name: 06 - ISBN com caractere invalido
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/isbn/v1/97885A5702870?providers=cbl
+  body: none
+  auth: none
+}
+
+tests {
+  test("retorna erro para ISBN com caractere invalido", function() {
+    expect(res.getStatus()).to.be.gte(400);
+  });
+}

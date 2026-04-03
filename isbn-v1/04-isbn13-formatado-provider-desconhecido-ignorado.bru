@@ -1,0 +1,17 @@
+meta {
+  name: 04 - ISBN13 formatado com provider desconhecido ignorado
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/isbn/v1/978-85-4570-287-0?providers=cbl,foo
+  body: none
+  auth: none
+}
+
+tests {
+  test("aceita provider desconhecido quando ha provider conhecido", function() {
+    expect([200, 404]).to.include(res.getStatus());
+  });
+}

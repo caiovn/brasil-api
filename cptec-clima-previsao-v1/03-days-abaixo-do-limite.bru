@@ -1,0 +1,17 @@
+meta {
+  name: 03 - Days abaixo do limite
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/cptec/v1/clima/previsao/{{validCityCode}}/0
+  body: none
+  auth: none
+}
+
+tests {
+  test("retorna erro para days igual a 0", function() {
+    expect(res.getStatus()).to.be.gte(400);
+  });
+}

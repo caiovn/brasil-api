@@ -1,0 +1,17 @@
+meta {
+  name: 08 - CEP valido nao encontrado
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{baseUrl}}/cep/v2/99999999
+  body: none
+  auth: none
+}
+
+tests {
+  test("retorna erro para CEP valido nao encontrado", function() {
+    expect(res.getStatus()).to.be.gte(400);
+  });
+}

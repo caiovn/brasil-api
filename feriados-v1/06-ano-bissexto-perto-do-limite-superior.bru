@@ -1,0 +1,18 @@
+meta {
+  name: 06 - Ano bissexto perto do limite superior
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/feriados/v1/2196
+  body: none
+  auth: none
+}
+
+tests {
+  test("retorna lista de feriados para 2196", function() {
+    expect(res.getStatus()).to.equal(200);
+    expect(res.getBody()).to.be.an("array");
+  });
+}

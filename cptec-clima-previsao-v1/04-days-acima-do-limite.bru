@@ -1,0 +1,17 @@
+meta {
+  name: 04 - Days acima do limite
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/cptec/v1/clima/previsao/{{validCityCode}}/7
+  body: none
+  auth: none
+}
+
+tests {
+  test("retorna erro para days maior que 6", function() {
+    expect(res.getStatus()).to.be.gte(400);
+  });
+}

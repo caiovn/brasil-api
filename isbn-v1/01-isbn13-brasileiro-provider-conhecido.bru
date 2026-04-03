@@ -1,0 +1,19 @@
+meta {
+  name: 01 - ISBN13 brasileiro com provider conhecido
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/isbn/v1/9788545702870?providers=cbl
+  body: none
+  auth: none
+}
+
+tests {
+  test("retorna sucesso para ISBN13 brasileiro com provider conhecido", function() {
+    expect(res.getStatus()).to.equal(200);
+    const body = res.getBody();
+    expect(body).to.have.property("isbn");
+  });
+}

@@ -1,0 +1,18 @@
+meta {
+  name: 01 - Ano limite inferior
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/feriados/v1/1900
+  body: none
+  auth: none
+}
+
+tests {
+  test("retorna lista de feriados para o limite inferior", function() {
+    expect(res.getStatus()).to.equal(200);
+    expect(res.getBody()).to.be.an("array");
+  });
+}

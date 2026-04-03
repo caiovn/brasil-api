@@ -1,0 +1,17 @@
+meta {
+  name: 08 - CityCode inexistente
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{baseUrl}}/cptec/v1/clima/previsao/{{invalidCityCode}}/3
+  body: none
+  auth: none
+}
+
+tests {
+  test("retorna erro para cityCode inexistente", function() {
+    expect(res.getStatus()).to.be.gte(400);
+  });
+}

@@ -1,0 +1,17 @@
+meta {
+  name: 10 - CityCode ausente
+  type: http
+  seq: 10
+}
+
+get {
+  url: {{baseUrl}}/cptec/v1/clima/previsao//3
+  body: none
+  auth: none
+}
+
+tests {
+  test("retorna erro para cityCode ausente", function() {
+    expect(res.getStatus()).to.be.gte(400);
+  });
+}

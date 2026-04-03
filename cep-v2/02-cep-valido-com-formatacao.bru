@@ -1,0 +1,19 @@
+meta {
+  name: 02 - CEP valido com formatacao
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/cep/v2/01001-000
+  body: none
+  auth: none
+}
+
+tests {
+  test("retorna sucesso para CEP valido com formatacao", function() {
+    expect(res.getStatus()).to.equal(200);
+    const body = res.getBody();
+    expect(body).to.have.property("cep");
+  });
+}

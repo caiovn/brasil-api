@@ -1,0 +1,17 @@
+meta {
+  name: 08 - Apenas provider desconhecido
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{baseUrl}}/isbn/v1/9788545702870?providers=foo
+  body: none
+  auth: none
+}
+
+tests {
+  test("retorna erro quando todos os providers sao desconhecidos", function() {
+    expect(res.getStatus()).to.be.gte(400);
+  });
+}

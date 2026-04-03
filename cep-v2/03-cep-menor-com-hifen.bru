@@ -1,0 +1,17 @@
+meta {
+  name: 03 - CEP invalido menor com hifen
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/cep/v2/1234-567
+  body: none
+  auth: none
+}
+
+tests {
+  test("retorna erro para CEP com menos digitos e hifen", function() {
+    expect(res.getStatus()).to.be.gte(400);
+  });
+}

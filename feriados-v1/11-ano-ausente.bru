@@ -1,0 +1,17 @@
+meta {
+  name: 11 - Ano ausente
+  type: http
+  seq: 11
+}
+
+get {
+  url: {{baseUrl}}/feriados/v1/
+  body: none
+  auth: none
+}
+
+tests {
+  test("retorna erro para ano ausente", function() {
+    expect(res.getStatus()).to.be.gte(400);
+  });
+}

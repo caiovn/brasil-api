@@ -1,0 +1,18 @@
+meta {
+  name: 05 - Ano bissexto tipico
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/feriados/v1/2024
+  body: none
+  auth: none
+}
+
+tests {
+  test("retorna lista de feriados para 2024", function() {
+    expect(res.getStatus()).to.equal(200);
+    expect(res.getBody()).to.be.an("array");
+  });
+}

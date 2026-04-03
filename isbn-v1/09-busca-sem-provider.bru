@@ -1,0 +1,17 @@
+meta {
+  name: 09 - Busca sem provider
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{baseUrl}}/isbn/v1/9788545702870
+  body: none
+  auth: none
+}
+
+tests {
+  test("busca em todos os providers quando query nao e enviada", function() {
+    expect([200, 404]).to.include(res.getStatus());
+  });
+}

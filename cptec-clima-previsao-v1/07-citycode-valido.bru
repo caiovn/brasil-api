@@ -1,0 +1,18 @@
+meta {
+  name: 07 - CityCode valido
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{baseUrl}}/cptec/v1/clima/previsao/{{validCityCode}}/3
+  body: none
+  auth: none
+}
+
+tests {
+  test("retorna previsao para cityCode valido", function() {
+    expect(res.getStatus()).to.equal(200);
+    expect(res.getBody()).to.be.an("array");
+  });
+}

@@ -1,0 +1,18 @@
+meta {
+  name: 02 - Ano bissexto perto do limite inferior
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/feriados/v1/1904
+  body: none
+  auth: none
+}
+
+tests {
+  test("retorna lista de feriados para ano bissexto valido", function() {
+    expect(res.getStatus()).to.equal(200);
+    expect(res.getBody()).to.be.an("array");
+  });
+}

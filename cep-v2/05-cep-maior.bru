@@ -1,0 +1,17 @@
+meta {
+  name: 05 - CEP invalido maior que 8 digitos
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/cep/v2/123456789
+  body: none
+  auth: none
+}
+
+tests {
+  test("retorna erro para CEP com mais de 8 digitos", function() {
+    expect(res.getStatus()).to.be.gte(400);
+  });
+}
