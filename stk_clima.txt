@@ -1,0 +1,121 @@
+Segue a modelagem do domínio para o endpoint **/cptec/v1/clima/previsao/{cityCode}/{days}**, considerando **Particionamento de Equivalência**, **Análise de Valor Limite** para `days` e **Transição de Estado** para `cityCode`:
+
+---
+
+## 1. Identificação do Domínio
+
+- **Recurso:** Consulta de previsão meteorológica para uma cidade por um número de dias.
+- **Entradas:**
+  - `cityCode` (path): código inteiro da cidade (deve existir na base CPTEC).
+  - `days` (path): quantidade de dias de previsão (inteiro).
+
+---
+
+## 2. Partições Relevantes (Particionamento de Equivalência)
+
+### **Entrada: days**
+
+- **Partição Válida:** Inteiro entre 1 e 6 (inclusive).
+- **Partição Inválida:** Menor que 1, maior que 6, não inteiro, nulo, ausente.
+
+### **Entrada: cityCode**
+
+- **Partição Válida:** Código existente na base CPTEC.
+- **Partição Inválida:** Código inexistente, nulo, não inteiro.
+
+---
+
+## 3. Análise de Valor Limite (`days`)
+
+| Caso | Valor de days | Esperado | Observação         |
+| ---- | ------------- | -------- | ------------------ |
+| 1    | 1             | Sucesso  | Limite inferior    |
+| 2    | 6             | Sucesso  | Limite superior    |
+| 3    | 0             | Erro     | Limite inferior -1 |
+| 4    | 7             | Erro     | Limite superior +1 |
+| 5    | "abc"         | Erro     | Não inteiro        |
+| 6    | null          | Erro     | Ausente/nulo       |
+
+---
+
+## 4. Transição de Estado (`cityCode`)
+
+### **Estados possíveis para cityCode:**
+
+- **Estado Inicial:** Código não consultado.
+- **Transição para "Válido":** Código existe → previsão retornada.
+- **Transição para "Inválido":** Código não existe → erro `"Cidade não localizada"`.
+
+#### Exemplo de transição:
+
+```mermaid
+stateDiagram-v2
+    [*] --> NãoConsultado
+    NãoConsultado --> Válido: cityCode existe
+    NãoConsultado --> Inválido: cityCode não existe
+    Válido --> [*]
+    Inválido --> [*]
+```
+
+---
+
+## 5. Restrições
+
+- `days` deve ser inteiro entre 1 e 6.
+- `cityCode` deve ser inteiro e existir na base CPTEC.
+- Se qualquer parâmetro for inválido, retorna erro padronizado.
+
+---
+
+## 6. Interações e Decisões
+
+- Se ambos válidos, retorna objeto `ClimaPrediction` com lista de previsões.
+- Se `days` inválido, retorna erro `"Quantidade de dias inválida (mínimo 1 dia e máximo 6 dias)"`.
+- Se `cityCode` inválido/inexistente, retorna erro `"Cidade não localizada"`.
+
+---
+
+## 7. Modelo Conceitual Simplificado
+
+```mermaid
+classDiagram
+    class ConsultaPrevisao {
+        +cityCode: int
+        +days: int
+        +consultar(cityCode, days): ClimaPrediction
+    }
+    class ClimaPrediction {
+        +cidade: string
+        +estado: string
+        +atualizado_em: string
+        +clima: List~Clima~
+    }
+    class Clima {
+        +data: string
+        +condicao: string
+        +min: int
+        +max: int
+        +indice_uv: float
+        +condicao_desc: string
+    }
+    class Erro {
+        +message: string
+        +name: string
+        +type: string
+    }
+    ConsultaPrevisao "1" --> "*" ClimaPrediction : retorna se válido
+    ConsultaPrevisao "1" --> "1" Erro : retorna em caso de erro
+```
+
+---
+
+## 8. Resumo das Decisões
+
+- O domínio é particionado por `days` (válido/inválido) e por existência de `cityCode`.
+- Limites de `days` são estritamente validados.
+- Transição de estado ocorre na validação do código da cidade.
+- A resposta é sempre uma lista de previsões ou uma mensagem de erro padronizada.
+
+---
+
+Se precisar de exemplos de payloads válidos/inválidos ou detalhamento dos objetos de resposta/erro, posso complementar!
